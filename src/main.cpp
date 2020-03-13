@@ -13,7 +13,7 @@ void setup() {
   Serial.begin(115200);
   char * devID;
   EEPROM.get(21, devID);
-  Serial.print("Device ID: ");
+  Serial.print("Ton ID: ");
   Serial.println(devID);
 }
 
