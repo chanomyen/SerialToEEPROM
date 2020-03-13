@@ -11,11 +11,14 @@ void replaceComma();
 
 void setup() {
   Serial.begin(115200);
-  // checkDefaultParams();
+  char * devID;
+  EEPROM.get(21, devID);
+  Serial.print("Device ID: ");
+  Serial.println(devID);
 }
 
 void loop() {
-  
+
 }
 
 void serialEvent() {
@@ -39,7 +42,11 @@ void serialEvent() {
     Serial.print("params:");
     Serial.println(params);
 
-    cmdExecute(cmd, params);
+    if (cmdExecute(cmd, params) > 0) {
+      Serial.println("CMD FAILED!");
+    } else {
+      Serial.println("CMD OK!");
+    }
 
     // clear UART RX buffer and counter
     UART_RX_COUNTER = 0;
@@ -49,7 +56,7 @@ void serialEvent() {
 
 void replaceComma() {
   uint8_t i = 0;
-  while (UART_BUFFER[i] != ','){
+  while (UART_BUFFER[i] != ',') {
     i++;
   }
   UART_BUFFER[i] = ' ';

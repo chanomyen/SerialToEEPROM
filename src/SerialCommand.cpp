@@ -8,28 +8,40 @@ DataObject Demo(1);
 DataObject TXMode(1);
 
 uint8_t cmdExecute(char cmd[10], char params[20]) {
-  if (strcmp(cmd, CMD_REBOOT) == 0) {                   // reboot
+  if (strcmp(cmd, CMD_REBOOT) == 0) {                     // reboot
     // reboot
-  } else if (strcmp(cmd, CMD_SET_DEVICE_ID) == 0) {     // set device id
-    return DeviceId.putData(params);
-  } else if (strcmp(cmd, CMD_SET_DEVICE_TOKEN) == 0) {     // set device token
+    return 1;
+  } else if (strcmp(cmd, CMD_SET_DEVICE_ID) == 0) {       // set device id
+    char *devID = params;
+    Serial.print("New deiviceID: ");
+    Serial.println(devID);
+    return DeviceId.putData(devID);
+    // return DeviceId.putData("devID0123456");
+  } else if (strcmp(cmd, CMD_SET_DEVICE_TOKEN) == 0) {    // set device token
     return DeviceToken.putData(params);
-  } else if (strcmp(cmd, CMD_MEM_CLEAR) == 0) {         // clean EEPROM
+  } else if (strcmp(cmd, CMD_MEM_CLEAR) == 0) {           // clean EEPROM
     Serial.println("start cleaning the memory.");
     cleanMemory();
     Serial.println("memory has cleaned.");
+    return 1;
   } else if (strcmp(cmd, CMD_PARAMS_CHECK) == 0) {     
     checkDefaultParams();
+    return 1;
   } else if (strcmp(cmd, CMD_GET_CONFIG) == 0) {     
     getConfigure();
+    return 1;
   } else if (strcmp(cmd, CMD_GET_INDEX) == 0) {     
     getIndex();
+    return 1;
   } else {
     Serial.println("Command not found!");
+    return 0;
   }
-  return 1;
 }
 
+/*************************************************************************************************
+ * @brief: If the parameter is null and then this function will put a default parameter to it.
+**************************************************************************************************/
 void checkDefaultParams() {
   if (DeviceId.getData() == '\0') {
     DeviceId.putData(DEFAULT_DEVICE_ID);

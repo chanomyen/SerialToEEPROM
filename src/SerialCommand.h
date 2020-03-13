@@ -1,4 +1,7 @@
-// #include "Memory.h"
+/**
+ * @author: Chanon Sermpol
+ * @modified:  13 March 2020
+*/
 #include <Arduino.h>
 #include <EEPROM.h>
 #include "Memory.h"
@@ -18,7 +21,7 @@
 #define CMD_GET_INDEX           "getindex"
 
 /**
- * @default configuration
+ * @brief: default configuration
 */
 #define DEFAULT_DEMO_MODE       (uint8_t)0
 #define DEFAULT_DEBUG_MODE      (uint8_t)0
